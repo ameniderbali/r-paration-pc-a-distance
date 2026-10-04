@@ -1,0 +1,10 @@
+<div class="form-container">
+  <h2>Demande de réparation</h2>
+  <form (ngSubmit)="submitForm()">
+    <input type="text" [(ngModel)]="name" name="name" placeholder="Nom" required>
+    <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required>
+    <input type="text" [(ngModel)]="phone" name="phone" placeholder="Téléphone" required>
+    <textarea [(ngModel)]="problem" name="problem" placeholder="Décrivez le problème" required></textarea>
+    <button type="submit">Envoyer</button>
+  </form>
+</div>

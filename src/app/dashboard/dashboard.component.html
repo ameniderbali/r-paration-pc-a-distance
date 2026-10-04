@@ -1,0 +1,36 @@
+<h2>Dashboard Technicien</h2>
+
+<table border="1" *ngIf="repairs.length > 0; else noRepairs">
+  <tr>
+    <th>Nom</th>
+    <th>Email</th>
+    <th>Téléphone</th>
+    <th>Problème</th>
+    <th>Status</th>
+    <th>TeamViewer</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr *ngFor="let r of repairs">
+    <td>{{ r.name }}</td>
+    <td>{{ r.email }}</td>
+    <td>{{ r.phone }}</td>
+    <td>{{ r.problem }}</td>
+    <td> <span 
+    [ngClass]="{
+      'badge-wait': r.status === 'En attente',
+      'badge-progress': r.status === 'En cours',
+      'badge-done': r.status === 'Terminé'
+    }">{{ r.status }}</span></td>
+    <td>{{ r.teamviewerId || '-' }} / {{ r.teamviewerPassword || '-' }}</td>
+    <td>
+      <button (click)="changeStatus(r.id)">Changer Status</button>
+      <button (click)="deleteRepair(r.id)">Supprimer</button>
+    </td>
+  </tr>
+</table>
+
+<ng-template #noRepairs>
+  <p>Aucune réparation trouvée.</p>
+</ng-template>
+

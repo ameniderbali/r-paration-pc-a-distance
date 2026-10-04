@@ -1,0 +1,21 @@
+<div class="form-container">
+  <h2>Accès à distance</h2>
+  <form (ngSubmit)="submitRemote()">
+    <input
+      type="text"
+      [(ngModel)]="teamviewerId"
+      name="teamviewerId"
+      placeholder="ID TeamViewer/AnyDesk"
+      required
+    />
+    <input
+      type="password"
+      [(ngModel)]="teamviewerPassword"
+      name="teamviewerPassword"
+      placeholder="Mot de passe"
+      required
+    />
+    <button type="submit">Envoyer</button>
+  </form>
+</div>
+
