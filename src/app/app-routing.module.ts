@@ -11,8 +11,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forbidden', component: ForbiddenComponent },
 
-  { path: 'new-request', component: UserFormComponent },
-  { path: 'remote', component: RemoteAccessComponent },
+  { path: 'new-request', component: UserFormComponent,
+    canActivate: [AuthGuard], data: { roles: ['CLIENT', 'ADMIN'] } },
+  { path: 'remote', component: RemoteAccessComponent,
+    canActivate: [AuthGuard], data: { roles: ['CLIENT', 'ADMIN'] } },
   { path: 'dashboard', component: DashboardComponent,
     canActivate: [AuthGuard], data: { roles: ['TECHNICIAN', 'ADMIN'] } },
 

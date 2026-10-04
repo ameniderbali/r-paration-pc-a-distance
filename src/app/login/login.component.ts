@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, Role } from '../auth/auth.service';
 
@@ -34,7 +35,15 @@ export class LoginComponent {
           const back = this.route.snapshot.queryParamMap.get('returnUrl');
           this.router.navigateByUrl(back ?? (res.role === 'CLIENT' ? '/new-request' : '/dashboard'));
         },
-        error: () => (this.error = 'Email ou mot de passe invalide')
+        error: (err: HttpErrorResponse) => {
+          if (err.status === 0) {
+            this.error = 'Impossible de joindre le serveur. Vérifiez que le backend est démarré.';
+          } else if (err.status === 401) {
+            this.error = 'Email ou mot de passe invalide. Si vous n’avez pas encore créé de compte, inscrivez-vous d’abord.';
+          } else {
+            this.error = `Échec de la connexion (HTTP ${err.status}). Réessayez ou contactez le support.`;
+          }
+        }
       });
     } else {
       this.auth.register(this.fullName, this.email, this.password, this.role).subscribe({

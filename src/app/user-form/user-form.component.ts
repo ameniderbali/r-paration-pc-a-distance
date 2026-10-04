@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { RepairService, Repair } from '../services/repair.service';
 
@@ -79,9 +80,17 @@ export class UserFormComponent {
         localStorage.setItem('repairId', String(res.id));
         this.router.navigate(['/remote']);
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         console.error(err);
-        alert('Erreur lors de la création de la réparation. Vérifiez que le serveur est démarré et que votre session est valide.');
+        if (err.status === 401) {
+          alert('Votre session a expiré. Reconnectez-vous avec un compte client.');
+        } else if (err.status === 403) {
+          alert('La création de demandes est réservée aux comptes Client ou Admin. Connectez-vous avec un compte client.');
+        } else if (err.status === 0) {
+          alert('Impossible de joindre le serveur. Vérifiez que le backend est démarré.');
+        } else {
+          alert(`Erreur lors de la création de la réparation (HTTP ${err.status}).`);
+        }
       }
     });
   }
