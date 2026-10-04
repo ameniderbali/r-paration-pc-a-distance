@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/repairs")
-@CrossOrigin(origins = "http://localhost:4200")
+
 public class RepairController {
 
     @Autowired
