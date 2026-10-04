@@ -2,6 +2,13 @@
   <h2>Accès à distance</h2>
   <form (ngSubmit)="submitRemote()">
     <input
+      type="number"
+      [(ngModel)]="repairIdInput"
+      name="repairIdInput"
+      placeholder="ID de réparation"
+      required
+    />
+    <input
       type="text"
       [(ngModel)]="teamviewerId"
       name="teamviewerId"

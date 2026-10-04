@@ -1,5 +1,9 @@
 <h2>Dashboard Technicien</h2>
 
+<p *ngIf="isLoading">Chargement des réparations...</p>
+<p *ngIf="loadError" role="alert">{{ loadError }}</p>
+
+<ng-container *ngIf="!isLoading && !loadError">
 <table border="1" *ngIf="repairs.length > 0; else noRepairs">
   <tr>
     <th>Nom</th>
@@ -33,4 +37,4 @@
 <ng-template #noRepairs>
   <p>Aucune réparation trouvée.</p>
 </ng-template>
-
+</ng-container>

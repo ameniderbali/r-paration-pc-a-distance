@@ -9,7 +9,8 @@ import { RepairService, Repair } from '../services/repair.service';
 export class DashboardComponent implements OnInit {
 
   repairs: Repair[] = [];
-  
+  isLoading = false;
+  loadError = '';
 
   constructor(private repairService: RepairService) {}
 
@@ -17,15 +18,19 @@ export class DashboardComponent implements OnInit {
     this.loadRepairs();
   }
 
-  loadRepairs() {
+  loadRepairs(): void {
+    this.isLoading = true;
+    this.loadError = '';
+
     this.repairService.getRepairs().subscribe({
       next: (data) => {
-        console.log('Repairs loaded:', data); // debug
         this.repairs = data;
+        this.isLoading = false;
       },
-      error: (err:any) => {
+      error: (err: unknown) => {
         console.error('Erreur GET repairs:', err);
-        alert('Erreur lors du chargement des réparations');
+        this.loadError = 'Impossible de charger les réparations. Vérifiez la connexion au serveur et votre session.';
+        this.isLoading = false;
       }
     });
   }
@@ -34,7 +39,7 @@ export class DashboardComponent implements OnInit {
     if (!id) return;
     this.repairService.updateStatus(id).subscribe({
       next: () => this.loadRepairs(),
-      error: (err:any) => {
+      error: (err: unknown) => {
         console.error('Erreur update status:', err);
         alert('Impossible de changer le status');
       }
@@ -45,7 +50,7 @@ export class DashboardComponent implements OnInit {
     if (!id) return;
     this.repairService.deleteRepair(id).subscribe({
       next: () => this.loadRepairs(),
-      error: (err:any) => {
+      error: (err: unknown) => {
         console.error('Erreur delete repair:', err);
         alert('Impossible de supprimer la réparation');
       }

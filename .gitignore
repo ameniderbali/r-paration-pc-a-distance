@@ -36,6 +36,10 @@ backend/src/main/resources/application.properties
 
 # Build output
 backend/target/
+/dist/
+/node_modules/
+/.angular/
+/coverage/
 
 # IDE
 .idea/
